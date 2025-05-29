@@ -1,11 +1,16 @@
 const mongoose = require('mongoose')
 
 const connectDB = (url) => {
-    return mongoose.connect(url, {
+    // Encode the URL to handle special characters
+    const encodedUrl = encodeURI(url)
+    
+    return mongoose.connect(encodedUrl, {
         useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
         useUnifiedTopology: true,
+        writeConcern: {
+            w: 'majority',
+            wtimeout: 2500
+        }
     })
 }
 
