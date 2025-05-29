@@ -2,9 +2,12 @@
   "name": "jobs",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node dist/app.js",
+    "dev": "nodemon",
+    "build": "tsc",
+    "watch-ts": "tsc -w"
   },
   "keywords": [],
   "author": "",
@@ -16,8 +19,13 @@
     "mongoose": "^5.13.23"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.24",
     "cross-env": "^7.0.3",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

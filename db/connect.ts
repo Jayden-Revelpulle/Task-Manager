@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
-const connectDB = (url) => {
+const connectDB = async (url: string): Promise<typeof mongoose> => {
     // Encode the URL to handle special characters
-    const encodedUrl = encodeURI(url)
+    const encodedUrl: string = encodeURI(url);
     
     return mongoose.connect(encodedUrl, {
         useNewUrlParser: true,
@@ -11,8 +11,7 @@ const connectDB = (url) => {
             w: 'majority',
             wtimeout: 2500
         }
-    })
-}
+    });
+};
 
-module.exports = connectDB
-    
+export default connectDB; 
