@@ -8,7 +8,7 @@ const Task_1 = __importDefault(require("../models/Task"));
 const async_1 = __importDefault(require("../middleware/async"));
 const custom_error_1 = require("../errors/custom-error");
 const getAllTasks = (0, async_1.default)(async (req, res) => {
-    const tasks = await Task_1.default.find({});
+    const tasks = await Task_1.default.find({}).exec();
     res.status(200).json({ tasks });
 });
 exports.getAllTasks = getAllTasks;
@@ -19,7 +19,7 @@ const createTask = (0, async_1.default)(async (req, res) => {
 exports.createTask = createTask;
 const getTask = (0, async_1.default)(async (req, res, next) => {
     const taskID = req.params.id.trim();
-    const task = await Task_1.default.findOne({ _id: taskID });
+    const task = await Task_1.default.findById(taskID).exec();
     if (!task) {
         return next((0, custom_error_1.createCustomError)(`No task with id: ${taskID}`, 404));
     }
@@ -28,10 +28,10 @@ const getTask = (0, async_1.default)(async (req, res, next) => {
 exports.getTask = getTask;
 const updateTask = (0, async_1.default)(async (req, res, next) => {
     const taskID = req.params.id.trim();
-    const task = await Task_1.default.findOneAndUpdate({ _id: taskID }, req.body, {
+    const task = await Task_1.default.findByIdAndUpdate(taskID, req.body, {
         new: true,
         runValidators: true,
-    });
+    }).exec();
     if (!task) {
         return next((0, custom_error_1.createCustomError)(`No task with id: ${taskID}`, 404));
     }
@@ -40,7 +40,7 @@ const updateTask = (0, async_1.default)(async (req, res, next) => {
 exports.updateTask = updateTask;
 const deleteTask = (0, async_1.default)(async (req, res, next) => {
     const taskID = req.params.id.trim();
-    const task = await Task_1.default.findOneAndDelete({ _id: taskID });
+    const task = await Task_1.default.findByIdAndDelete(taskID).exec();
     if (!task) {
         return next((0, custom_error_1.createCustomError)(`No task with id: ${taskID}`, 404));
     }

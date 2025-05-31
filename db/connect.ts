@@ -5,11 +5,9 @@ const connectDB = async (url: string): Promise<typeof mongoose> => {
     const encodedUrl: string = encodeURI(url);
     
     return mongoose.connect(encodedUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         writeConcern: {
             w: 'majority',
-            wtimeout: 2500
+            wtimeoutMS: 2500
         }
     });
 };

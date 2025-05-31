@@ -5,7 +5,7 @@ interface ITask extends Document {
     completed: boolean;
 }
 
-const TaskSchema: Schema = new Schema({
+const TaskSchema = new Schema<ITask>({
     name: {
         type: String,
         required: [true, 'must provide name'],

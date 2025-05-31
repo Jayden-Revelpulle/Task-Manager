@@ -4,7 +4,7 @@ import asyncWrapper from '../middleware/async';
 import { createCustomError } from '../errors/custom-error';
 
 const getAllTasks = asyncWrapper(async (req: Request, res: Response): Promise<void> => {
-    const tasks = await Task.find({});
+    const tasks = await Task.find({}).exec();
     res.status(200).json({ tasks });
 });
 
@@ -15,7 +15,7 @@ const createTask = asyncWrapper(async (req: Request, res: Response): Promise<voi
 
 const getTask = asyncWrapper(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const taskID: string = req.params.id.trim();
-    const task = await Task.findOne({ _id: taskID });
+    const task = await Task.findById(taskID).exec();
 
     if (!task) {
         return next(createCustomError(`No task with id: ${taskID}`, 404));
@@ -25,14 +25,14 @@ const getTask = asyncWrapper(async (req: Request, res: Response, next: NextFunct
 
 const updateTask = asyncWrapper(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const taskID: string = req.params.id.trim();
-    const task = await Task.findOneAndUpdate(
-        { _id: taskID },
+    const task = await Task.findByIdAndUpdate(
+        taskID,
         req.body,
         {
             new: true,
             runValidators: true,
         }
-    );
+    ).exec();
 
     if (!task) {
         return next(createCustomError(`No task with id: ${taskID}`, 404));
@@ -43,7 +43,7 @@ const updateTask = asyncWrapper(async (req: Request, res: Response, next: NextFu
 
 const deleteTask = asyncWrapper(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const taskID: string = req.params.id.trim();
-    const task = await Task.findOneAndDelete({ _id: taskID });
+    const task = await Task.findByIdAndDelete(taskID).exec();
     
     if (!task) {
         return next(createCustomError(`No task with id: ${taskID}`, 404));

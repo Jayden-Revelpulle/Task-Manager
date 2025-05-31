@@ -8,11 +8,9 @@ const connectDB = async (url) => {
     // Encode the URL to handle special characters
     const encodedUrl = encodeURI(url);
     return mongoose_1.default.connect(encodedUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         writeConcern: {
             w: 'majority',
-            wtimeout: 2500
+            wtimeoutMS: 2500
         }
     });
 };
