@@ -8,11 +8,11 @@ import errorHandlerMiddleware from './middleware/error-handler';
 
 const app: any = express();
 const corsOptions = {
-    origin: 'http://localhost:5173'
+    origin: process.env.CLIENT_URL || 'http://localhost:5173'
 }
 
 // middleware
-app.use(express.static('./public'));
+//app.use(express.static('./public'));
 app.use(cors(corsOptions))
 app.use(express.json());
 
