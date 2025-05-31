@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { config } from 'dotenv';
 import tasks from './routes/tasks';
 import connectDB from './db/connect';
@@ -6,9 +7,13 @@ import notFound from './middleware/not-found';
 import errorHandlerMiddleware from './middleware/error-handler';
 
 const app: any = express();
+const corsOptions = {
+    origin: 'http://localhost:5173'
+}
 
 // middleware
 app.use(express.static('./public'));
+app.use(cors(corsOptions))
 app.use(express.json());
 
 // routes
