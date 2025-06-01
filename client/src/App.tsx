@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "./components/Input";
 import Tasks from "./components/Tasks";
-import "./App.css";
 
 interface Task {
   _id: string;
@@ -10,7 +9,8 @@ interface Task {
   completed: boolean;
 }
 
-const API_BASE_URL = "http://localhost:3000/api/v1";
+// In production, API calls will be made to the same origin
+const API_BASE_URL = "/api/v1";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
