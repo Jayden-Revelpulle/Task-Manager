@@ -7,6 +7,7 @@ import "./App.css";
 interface Task {
   _id: string;
   name: string;
+  completed: boolean;
 }
 
 const API_BASE_URL = "http://localhost:3000/api/v1";

@@ -22,15 +22,18 @@ export default function Input({ fetchTasks }: InputProps) {
   };
 
   return (
-    <div>
+    <div className="flex gap-2 w-full">
       <input
         type="text"
-        className="bg-gray-100 border-2 p-1"
+        className="flex-grow bg-gray-100 border-2 p-2 rounded"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Enter a new task"
       />
-      <button className="border-2 p-1 hover:bg-gray-100" onClick={handleSubmit}>
+      <button
+        className="px-4 py-2 border-2 rounded hover:bg-gray-100 whitespace-nowrap"
+        onClick={handleSubmit}
+      >
         Add Task
       </button>
     </div>

@@ -6,6 +6,7 @@ const API_BASE_URL = "http://localhost:3000/api/v1";
 interface TaskType {
   _id: string;
   name: string;
+  completed: boolean;
 }
 
 interface TasksProps {
@@ -23,6 +24,17 @@ export default function Tasks({ tasks, fetchTasks }: TasksProps) {
     }
   };
 
+  const updateTask = async (id: string, completed: boolean) => {
+    try {
+      await axios.patch(`${API_BASE_URL}/tasks/${id}`, {
+        completed: completed,
+      });
+      fetchTasks();
+    } catch (error) {
+      console.error("Error updating task:", error);
+    }
+  };
+
   return (
     <div className="w-full max-w-md">
       {tasks.map((task) => (
@@ -30,7 +42,9 @@ export default function Tasks({ tasks, fetchTasks }: TasksProps) {
           key={task._id}
           id={task._id}
           name={task.name}
+          completed={task.completed}
           onDelete={deleteTask}
+          onUpdate={updateTask}
         />
       ))}
     </div>
