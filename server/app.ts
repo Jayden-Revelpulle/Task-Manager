@@ -8,13 +8,16 @@ import notFound from './middleware/not-found';
 import errorHandlerMiddleware from './middleware/error-handler';
 
 const app: any = express();
-const corsOptions = {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173'
-}
 
 // middleware
-app.use(cors(corsOptions))
 app.use(express.json());
+
+// Enable CORS in development only
+if (process.env.NODE_ENV !== 'production') {
+    app.use(cors({
+        origin: process.env.CLIENT_URL || 'http://localhost:5173'
+    }));
+}
 
 // routes
 app.use('/api/v1/tasks', tasks);
