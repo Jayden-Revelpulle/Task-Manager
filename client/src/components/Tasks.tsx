@@ -24,10 +24,11 @@ export default function Tasks({ tasks, fetchTasks }: TasksProps) {
     }
   };
 
-  const updateTask = async (id: string, completed: boolean) => {
+  const updateTask = async (id: string, completed: boolean, name?: string) => {
     try {
       await axios.patch(`${API_BASE_URL}/tasks/${id}`, {
         completed: completed,
+        name: name
       });
       fetchTasks();
     } catch (error) {
