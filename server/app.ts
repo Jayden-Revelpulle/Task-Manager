@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { config } from 'dotenv';
+import path from 'path';
 import tasks from './routes/tasks';
 import connectDB from './db/connect';
 import notFound from './middleware/not-found';
@@ -17,6 +18,18 @@ app.use(express.json());
 
 // routes
 app.use('/api/v1/tasks', tasks);
+
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+    // Serve static files from the React app
+    const __dirname = path.resolve();
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+
+    // Handle React routing, return all requests to React app
+    app.get('*', (req: any, res: any) => {
+        res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    });
+}
 
 app.use(notFound);
 app.use(errorHandlerMiddleware);
